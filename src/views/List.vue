@@ -1,13 +1,19 @@
 <template>
-  <section>
-    <list-character-card
-      v-for="character in characters"
-      :key="character.id" 
-      :name="character.name"
-      :img="`${character.thumbnail.path}.${character.thumbnail.extension}`"
-    />
+  <div>
+    <section class="card-grid">
+      <div
+        v-for="character in characters"
+        :key="character.id" 
+        class="card-grid__element"
+      >
+        <list-character-card
+        :name="character.name"
+        :img="`${character.thumbnail.path}.${character.thumbnail.extension}`"
+        />
+      </div>
+    </section>
     <v-pagination v-model="page" :length="pageNumber" total-visible="9" />
-  </section>
+  </div>
 </template>
 
 <script setup>
@@ -48,3 +54,19 @@ const fetchCharacters = () => {
     .catch(err => console.log(err))
 }
 </script>
+
+<style scoped>
+.card-grid {
+  margin: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 1rem;
+}
+
+.card-grid__element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+</style>
