@@ -2,7 +2,9 @@
   <v-app>
     <v-app-bar color="primary">
       <v-app-bar-title>
-        Marvel Frontend Challenge
+        <router-link class="text-white text-decoration-none" :to="{name: 'Home'}">
+          Marvel Frontend Challenge
+        </router-link>
       </v-app-bar-title>
     </v-app-bar>
     <default-view />
