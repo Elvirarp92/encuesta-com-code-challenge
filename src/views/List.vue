@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="card-grid">
+    <section class="card-grid ma-8">
       <div
         v-for="character in characters"
         :key="character.id" 
@@ -63,7 +63,6 @@ const fetchCharacters = () => {
 
 <style scoped>
 .card-grid {
-  margin: 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 1rem;

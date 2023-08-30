@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="ma-8">
     <h1 class="text-h1">
       {{ character.name }}
     </h1>
