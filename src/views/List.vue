@@ -1,8 +1,11 @@
 <template>
   <section>
-    <p v-for="character in characters" :key="character.id">
-      {{ character.name }}
-    </p>
+    <list-character-card
+      v-for="character in characters"
+      :key="character.id" 
+      :name="character.name"
+      :img="`${character.thumbnail.path}.${character.thumbnail.extension}`"
+    />
     <v-pagination v-model="page" :length="pageNumber" total-visible="9" />
   </section>
 </template>
@@ -10,6 +13,7 @@
 <script setup>
 import { getCharacters } from '@/api/index'
 import { ref, computed, watch, onMounted } from 'vue'
+import ListCharacterCard from '@/components/ListCharacterCard.vue';
 
 const characters = ref([])
 
