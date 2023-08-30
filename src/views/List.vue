@@ -36,7 +36,7 @@ const totalCharacters = ref(0)
 const pageNumber = computed(() => Math.ceil(totalCharacters.value / itemsPerPage.value))
 
 /* Watchers */
-watch(page, newPage => {
+watch(page, () => {
   fetchCharacters()
 })
 
