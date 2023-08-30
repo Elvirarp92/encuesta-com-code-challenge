@@ -29,7 +29,37 @@ const getCharacter = id => {
   })
 }
 
+const getCharacterSeries = params => {
+  const {characterId, page, itemsPerPage} = {...params}
+  return new Promise((resolve, reject) => {
+    axiosInstance.get(`characters/${characterId}/series`, {
+      params: {
+        offset: (page - 1) * itemsPerPage,
+        limit: itemsPerPage,
+      }
+    })
+      .then(res => resolve(res.data.data))
+      .catch(err => reject(err))
+  })
+}
+
+const getCharacterComics = params => {
+  const {characterId, page, itemsPerPage} = {...params}
+  return new Promise((resolve, reject) => {
+    axiosInstance.get(`characters/${characterId}/comics`, {
+      params: {
+        offset: (page - 1) * itemsPerPage,
+        limit: itemsPerPage,
+      }
+    })
+      .then(res => resolve(res.data.data))
+      .catch(err => reject(err))
+  })
+}
+
 export {
   getCharacters,
   getCharacter,
+  getCharacterSeries,
+  getCharacterComics
 }
