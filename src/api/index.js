@@ -12,7 +12,7 @@ const getCharacters = (params) => {
   return new Promise((resolve, reject) => {
     axiosInstance.get('characters', {
       params: {
-        offset: page - 1,
+        offset: (page - 1) * itemsPerPage,
         limit: itemsPerPage,
       }
     })
