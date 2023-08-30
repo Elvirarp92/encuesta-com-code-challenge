@@ -12,20 +12,21 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-card flat>
-        <v-tabs bg-color="primary" v-model="tab">
-          <v-tab 
-            value="series"
-          >
-            Series
-          </v-tab>
-          <v-tab 
-            value="comics"
-          >
-            Comics
-          </v-tab>
-        </v-tabs>
-        <v-card-text>
+      <v-col cols="12">
+        <v-card flat>
+          <v-tabs align-tabs="center" bg-color="primary" v-model="tab">
+            <v-tab 
+              value="series"
+            >
+              Series
+            </v-tab>
+            <v-tab 
+              value="comics"
+            >
+              Comics
+            </v-tab>
+          </v-tabs>
+          <v-card-text>
             <v-window v-model="tab">
               <v-window-item 
                 value="series"
@@ -47,7 +48,8 @@
               </v-window-item>
             </v-window>
           </v-card-text>
-      </v-card>
+        </v-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>
