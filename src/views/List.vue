@@ -23,17 +23,14 @@
 </template>
 
 <script setup>
-import { getCharacters } from '@/api/index'
-import { ref, computed, watch, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { watch, onMounted } from 'vue'
 import ListCharacterCard from '@/components/ListCharacterCard.vue';
+import { useCharactersStore } from '@/store/characters'
 
-const characters = ref([])
-
-/* Pagination variables */
-const page = ref(1)
-const itemsPerPage = ref(20)
-const totalCharacters = ref(0)
-const pageNumber = computed(() => Math.ceil(totalCharacters.value / itemsPerPage.value))
+const store = useCharactersStore()
+const { characters, page, itemsPerPage, totalCharacters, pageNumber } = storeToRefs(store)
+const { fetchCharacters } = store
 
 /* Watchers */
 watch(page, () => {
@@ -45,20 +42,6 @@ onMounted(() => {
   fetchCharacters()
 })
 
-/* Functions */
-const fetchCharacters = () => {
-  const params = {
-    page: page.value,
-    itemsPerPage: itemsPerPage.value
-  }
-
-  getCharacters(params)
-    .then(res => {
-      characters.value = res.results
-      totalCharacters.value = res.total
-    })
-    .catch(err => console.log(err))
-}
 </script>
 
 <style scoped>
