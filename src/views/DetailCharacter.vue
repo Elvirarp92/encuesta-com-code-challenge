@@ -30,12 +30,20 @@
               <v-window-item 
                 value="series"
               >
-                {{ series }}
+                <character-appearance-data-table
+                  :items="series"
+                  :total-items="totalSeries"
+                  @change-page="fetchCharacterSeries"
+                />
               </v-window-item>
               <v-window-item 
                 value="comics"
               >
-                {{ comics }}
+                <character-appearance-data-table
+                  :items="comics"
+                  :total-items="totalComics"
+                  @change-page="fetchCharacterComics"
+                />
               </v-window-item>
             </v-window>
           </v-card-text>
@@ -46,8 +54,9 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import { getCharacter } from '@/api/index'
+import { getCharacter, getCharacterComics, getCharacterSeries } from '@/api/index'
 import { ref, computed, watch, onMounted } from 'vue'
+import CharacterAppearanceDataTable from '@/components/CharacterAppearanceDataTable.vue';
 
 const route = useRoute()
 
@@ -59,16 +68,6 @@ const description = computed(() => character.value.description)
 
 /* Tab variables */
 const tab = ref('events')
-const tabList = [
-  {
-    value: 'series',
-    name: 'Series',
-  },
-  {
-    value: 'comics',
-    name: 'Comics',
-  },
-]
 
 /* Character appearances variables */
 const totalSeries = ref(0)
@@ -90,10 +89,38 @@ const fetchCharacter = () => {
   getCharacter(route.params.id)
     .then(res => {
       character.value = res
-      series.value = res.series.items
-      totalSeries.value = res.series.available
-      comics.value = res.comics.items
-      totalComics.value = res.comics.available
+      
+      fetchCharacterSeries()
+      fetchCharacterComics()
+    })
+    .catch(err => console.log(err))
+}
+
+const fetchCharacterSeries = emittedParams => {
+  const params = {
+    characterId: route.params.id,
+    ...emittedParams
+  }
+
+  getCharacterSeries(params)
+    .then(res => {
+      series.value = res.results
+      totalSeries.value = res.total
+    })
+    .catch(err => console.log(err))
+
+}
+
+const fetchCharacterComics = emittedParams => {
+  const params = {
+    characterId: route.params.id,
+    ...emittedParams
+  }
+
+  getCharacterComics(params)
+    .then(res => {
+      comics.value = res.results
+      totalComics.value = res.total
     })
     .catch(err => console.log(err))
 }
