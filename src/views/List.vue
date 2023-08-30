@@ -9,6 +9,12 @@
         <list-character-card
         :name="character.name"
         :img="`${character.thumbnail.path}.${character.thumbnail.extension}`"
+        :to="{
+          name: 'Character',
+          params: {
+            id: character.id
+          }
+        }"
         />
       </div>
     </section>

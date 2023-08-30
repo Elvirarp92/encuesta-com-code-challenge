@@ -21,6 +21,15 @@ const getCharacters = (params) => {
   })
 }
 
+const getCharacter = id => {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get(`characters/${id}`)
+      .then(res => resolve(res.data.data.results[0]))
+      .catch(err => reject(err))
+  })
+}
+
 export {
   getCharacters,
+  getCharacter,
 }
