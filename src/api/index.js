@@ -7,9 +7,15 @@ const axiosInstance = axios.create({
   }
 })
 
-const getCharacters = () => {
+const getCharacters = (params) => {
+  const { page, itemsPerPage } = { ...params }
   return new Promise((resolve, reject) => {
-    axiosInstance.get('characters')
+    axiosInstance.get('characters', {
+      params: {
+        offset: page - 1,
+        limit: itemsPerPage,
+      }
+    })
       .then(res => resolve(res.data.data))
       .catch(err => reject(err))
   })
