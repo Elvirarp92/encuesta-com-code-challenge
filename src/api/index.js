@@ -8,13 +8,20 @@ const axiosInstance = axios.create({
 })
 
 const getCharacters = (params) => {
-  const { page, itemsPerPage } = { ...params }
+  const { name, page, itemsPerPage } = { ...params }
+
+  const requestParams = {
+    offset: (page - 1) * itemsPerPage,
+    limit: itemsPerPage,
+  }
+
+  if (name) {
+    requestParams.nameStartsWith = name
+  }
+
   return new Promise((resolve, reject) => {
     axiosInstance.get('characters', {
-      params: {
-        offset: (page - 1) * itemsPerPage,
-        limit: itemsPerPage,
-      }
+      params: requestParams
     })
       .then(res => resolve(res.data.data))
       .catch(err => reject(err))

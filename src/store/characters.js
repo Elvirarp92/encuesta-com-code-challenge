@@ -7,6 +7,9 @@ export const useCharactersStore = defineStore('characters', {
     page: 1,
     itemsPerPage: 20,
     totalCharacters: 0,
+
+    /* Search parameters */
+    searchName: ''
   }),
 
   getters: {
@@ -18,6 +21,7 @@ export const useCharactersStore = defineStore('characters', {
   actions: {
     fetchCharacters() {
       const params = {
+        name: this.searchName,
         page: this.page,
         itemsPerPage: this.itemsPerPage
       }
