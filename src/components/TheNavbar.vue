@@ -11,13 +11,39 @@
     <template #extension v-if="searchMenuIsShowing">
       <v-container fluid>
         <v-row>
-          <v-col cols="8">
+          <v-col cols="6">
             <v-text-field
               v-debounce="fetchCharacters"
-              v-model="searchName"
+              v-model="name"
               density="comfortable"
               prepend-inner-icon="mdi-magnify"
               label="Search heroes by name"
+            />
+          </v-col>
+          <v-col cols="3">
+            <v-autocomplete
+              v-model="series"
+              v-model:search="seriesSearch"
+              prepend-inner-icon="mdi-filter"
+              item-title="title"
+              item-value="id"
+              density="comfortable"
+              label="Series"
+              :loading="seriesAreLoading"
+              :items="seriesList"
+            />
+          </v-col>
+          <v-col cols="3">
+            <v-autocomplete
+              v-model="comics"
+              v-model:search="comicsSearch"
+              prepend-inner-icon="mdi-filter"
+              item-title="title"
+              item-value="id"
+              density="comfortable"
+              label="Comics"
+              :loading="comicsAreLoading"
+              :items="comicsList"
             />
           </v-col>
         </v-row>
@@ -27,18 +53,65 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCharactersStore } from '@/store/characters'
+import { getComics, getSeries }  from '@/api'
+import { debounce } from 'vue-debounce'
+
+/* Store */
 
 const store = useCharactersStore()
-const { searchName } = storeToRefs(store)
+const { name, comics, series } = storeToRefs(store)
 const { fetchCharacters } = store
 
+/* Variables */
+
 const searchMenuIsShowing = ref(true)
+
+const comicsAreLoading = ref(false)
+const comicsList = ref([])
+const comicsSearch = ref('')
+
+const seriesAreLoading = ref(false)
+const seriesList = ref([])
+const seriesSearch = ref('')
+
+/* Watchers */
+watch(comicsSearch, debounce(title => fetchComics(title), 500))
+watch(seriesSearch, debounce(title => fetchSeries(title), 500))
+watch(comics,  () => fetchCharacters())
+watch(series, () => fetchCharacters())
 
 /* Functions */
 const toggleSearchMenu = () => {
   searchMenuIsShowing.value = !searchMenuIsShowing.value
 }
+
+const fetchComics = title => {
+  comicsAreLoading.value = true
+
+  getComics({ title })
+    .then(res => {
+      comicsList.value = res.results
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
+      comicsAreLoading.value = false
+    })
+}
+
+const fetchSeries = title => {
+  seriesAreLoading.value = true
+
+  getSeries({ title })
+    .then(res => {
+      seriesList.value = res.results
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
+      seriesAreLoading.value = false
+    })
+}
+
 </script>

@@ -15,7 +15,7 @@ const calculateOffset = (page, itemsPerPage) => page && itemsPerPage ? (page - 1
 /* API calls */
 
 const getCharacters = (params) => {
-  const { name, page, itemsPerPage } = { ...params }
+  const { name, page, itemsPerPage, series, comics } = { ...params }
 
   const requestParams = {
     offset: calculateOffset(page, itemsPerPage),
@@ -24,6 +24,14 @@ const getCharacters = (params) => {
 
   if (name) {
     requestParams.nameStartsWith = name
+  }
+  
+  if (series) {
+    requestParams.series = series
+  }
+
+  if (comics) {
+    requestParams.comics = comics
   }
 
   return new Promise((resolve, reject) => {
@@ -71,9 +79,47 @@ const getCharacterComics = params => {
   })
 }
 
+const getSeries = params => {
+  const { title } = { ...params }
+
+  const requestParams = {}
+
+  if (title) {
+    requestParams.titleStartsWith = title
+  }
+
+  return new Promise((resolve, reject) => {
+    axiosInstance.get('series', {
+      params: requestParams
+    })
+      .then(res => resolve(res.data.data))
+      .catch(err => reject(err))
+  })
+}
+
+const getComics = params => {
+  const { title } = { ...params }
+
+  const requestParams = {}
+
+  if (title) {
+    requestParams.titleStartsWith = title
+  }
+
+  return new Promise((resolve, reject) => {
+    axiosInstance.get('comics', {
+      params: requestParams
+    })
+      .then(res => resolve(res.data.data))
+      .catch(err => reject(err))
+  })
+}
+
 export {
   getCharacters,
   getCharacter,
   getCharacterSeries,
-  getCharacterComics
+  getCharacterComics,
+  getSeries,
+  getComics,
 }

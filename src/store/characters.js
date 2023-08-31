@@ -9,7 +9,9 @@ export const useCharactersStore = defineStore('characters', {
     totalCharacters: 0,
 
     /* Search parameters */
-    searchName: ''
+    name: '',
+    comics: null,
+    series: null,
   }),
 
   getters: {
@@ -20,13 +22,15 @@ export const useCharactersStore = defineStore('characters', {
 
   actions: {
     fetchCharacters() {
-      const params = {
-        name: this.searchName,
+      const requestParams = {
+        name: this.name,
         page: this.page,
-        itemsPerPage: this.itemsPerPage
+        itemsPerPage: this.itemsPerPage,
+        comics: this.comics,
+        series: this.series,
       }
     
-      getCharacters(params)
+      getCharacters(requestParams)
         .then(res => {
           this.characters = res.results
           this.totalCharacters = res.total
