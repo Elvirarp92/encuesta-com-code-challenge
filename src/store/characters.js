@@ -26,8 +26,14 @@ export const useCharactersStore = defineStore('characters', {
         name: this.name,
         page: this.page,
         itemsPerPage: this.itemsPerPage,
-        comics: this.comics,
-        series: this.series,
+      }
+      
+      if (this.comics) {
+        requestParams.comics = this.comics.id
+      }
+
+      if (this.series) {
+        requestParams.series = this.series.id
       }
     
       getCharacters(requestParams)
