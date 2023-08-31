@@ -6,7 +6,15 @@
       </router-link>
     </v-app-bar-title>
     <template #append>
-      <v-btn icon="mdi-magnify" @click="toggleSearchMenu" />
+        <v-btn icon="mdi-magnify" @click="toggleSearchMenu" />
+        <v-switch 
+          hide-details 
+          inset
+          :model-value="theme.global.name"
+          false-icon="mdi-weather-night" 
+          true-icon="mdi-weather-sunny"
+          @change="toggleTheme"
+        />
     </template>
     <template #extension v-if="searchMenuIsShowing">
       <v-container fluid>
@@ -60,16 +68,15 @@
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCharactersStore } from '@/store/characters'
+import { useTheme } from 'vuetify'
 import { getComics, getSeries }  from '@/api'
 import { debounce } from 'vue-debounce'
-
-/* Store */
 
 const store = useCharactersStore()
 const { name, comics, series } = storeToRefs(store)
 const { fetchCharacters } = store
 
-/* Variables */
+const theme = useTheme()
 
 const searchMenuIsShowing = ref(true)
 
@@ -116,6 +123,10 @@ const fetchSeries = title => {
     .finally(() => {
       seriesAreLoading.value = false
     })
+}
+
+const toggleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
 
 </script>
