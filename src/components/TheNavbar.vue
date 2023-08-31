@@ -23,6 +23,7 @@
           <v-col cols="3">
             <v-autocomplete
               return-object
+              clearable
               v-model="series"
               v-model:search="seriesSearch"
               prepend-inner-icon="mdi-filter"
@@ -37,6 +38,7 @@
           <v-col cols="3">
             <v-autocomplete
               return-object
+              clearable
               v-model="comics"
               v-model:search="comicsSearch"
               prepend-inner-icon="mdi-filter"
