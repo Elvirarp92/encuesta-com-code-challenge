@@ -88,6 +88,8 @@ onMounted(() => {
 
 /* Functions */
 const fetchCharacter = () => {
+  if (!route.params.id) return
+
   getCharacter(route.params.id)
     .then(res => {
       character.value = res
