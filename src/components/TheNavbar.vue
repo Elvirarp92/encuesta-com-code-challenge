@@ -13,6 +13,7 @@
         <v-row>
           <v-col cols="8">
             <v-text-field
+              v-debounce="fetchCharacters"
               v-model="searchName"
               density="comfortable"
               prepend-inner-icon="mdi-magnify"
@@ -26,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCharactersStore } from '@/store/characters'
 
@@ -35,8 +36,6 @@ const { searchName } = storeToRefs(store)
 const { fetchCharacters } = store
 
 const searchMenuIsShowing = ref(false)
-
-watch(searchName, () => { fetchCharacters() })
 
 /* Functions */
 const toggleSearchMenu = () => {
