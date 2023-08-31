@@ -1,4 +1,6 @@
-# default
+# Encuesta.com code challenge
+## Environment variables
+- `VITE_APP_MARVEL_PUBLIC_KEY`: API key for the [Marvel API](https://developer.marvel.com/).
 
 ## Project setup
 
