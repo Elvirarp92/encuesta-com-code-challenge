@@ -22,6 +22,7 @@
               density="comfortable"
               prepend-inner-icon="mdi-magnify"
               label="Search heroes by name"
+              :loading="charactersAreLoading"
             />
           </v-col>
           <v-col cols="3">
@@ -69,7 +70,7 @@ import { getComics, getSeries }  from '@/api'
 import { debounce } from 'vue-debounce'
 
 const store = useCharactersStore()
-const { name, comics, series } = storeToRefs(store)
+const { name, comics, series, charactersAreLoading } = storeToRefs(store)
 const { fetchCharacters } = store
 
 const theme = useTheme()

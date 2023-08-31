@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-progress-linear v-if="charactersAreLoading" indeterminate></v-progress-linear>
     <section class="card-grid ma-8">
       <div
         v-for="character in characters"
@@ -29,7 +30,7 @@ import ListCharacterCard from '@/components/ListCharacterCard.vue';
 import { useCharactersStore } from '@/store/characters'
 
 const store = useCharactersStore()
-const { characters, page, itemsPerPage, totalCharacters, pageNumber } = storeToRefs(store)
+const { characters, page, charactersAreLoading, pageNumber } = storeToRefs(store)
 const { fetchCharacters } = store
 
 /* Watchers */
