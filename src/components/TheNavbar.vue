@@ -35,7 +35,7 @@ const store = useCharactersStore()
 const { searchName } = storeToRefs(store)
 const { fetchCharacters } = store
 
-const searchMenuIsShowing = ref(false)
+const searchMenuIsShowing = ref(true)
 
 /* Functions */
 const toggleSearchMenu = () => {
