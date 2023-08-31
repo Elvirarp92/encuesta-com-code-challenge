@@ -5,6 +5,12 @@
       <th>
         Title
       </th>
+      <th>
+        Type
+      </th>
+      <th>
+        Description
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -12,11 +18,17 @@
       <td>
         {{ item.title }}
       </td>
+      <td>
+        {{ item.type }}
+      </td>
+      <td>
+        {{ item.description }}
+      </td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td>
+      <td colspan="3">
         <v-pagination 
           v-model="page" 
           :length="pageNumber" 
