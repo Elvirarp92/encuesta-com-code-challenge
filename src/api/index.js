@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+/* Axios instance */
+
 const axiosInstance = axios.create({
   baseURL: 'https://gateway.marvel.com/v1/public/',
   params: {
@@ -7,11 +9,16 @@ const axiosInstance = axios.create({
   }
 })
 
+/* Helper functions */
+const calculateOffset = (page, itemsPerPage) => page && itemsPerPage ? (page - 1) * itemsPerPage : 0
+
+/* API calls */
+
 const getCharacters = (params) => {
   const { name, page, itemsPerPage } = { ...params }
 
   const requestParams = {
-    offset: (page - 1) * itemsPerPage,
+    offset: calculateOffset(page, itemsPerPage),
     limit: itemsPerPage,
   }
 
@@ -41,8 +48,8 @@ const getCharacterSeries = params => {
   return new Promise((resolve, reject) => {
     axiosInstance.get(`characters/${characterId}/series`, {
       params: {
-        offset: (page - 1) * itemsPerPage,
-        limit: itemsPerPage,
+        offset: calculateOffset(page, itemsPerPage),
+        limit: itemsPerPage || 20,
       }
     })
       .then(res => resolve(res.data.data))
@@ -55,7 +62,7 @@ const getCharacterComics = params => {
   return new Promise((resolve, reject) => {
     axiosInstance.get(`characters/${characterId}/comics`, {
       params: {
-        offset: (page - 1) * itemsPerPage,
+        offset: calculateOffset(page, itemsPerPage),
         limit: itemsPerPage,
       }
     })
