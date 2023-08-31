@@ -20,6 +20,8 @@ export default createVuetify({
   },
 
   theme: {
+    defaultTheme: 'light',
+
     themes: {
       light: {
         colors: {
@@ -29,6 +31,12 @@ export default createVuetify({
           warning: '#FFCC33',
           error: '#E26D5A',
           info: '#4DA1A9'
+        }
+      },
+
+      dark: {
+        colors: {
+          primary: '#E26D5A'
         }
       }
     },

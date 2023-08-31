@@ -7,13 +7,9 @@
     </v-app-bar-title>
     <template #append>
         <v-btn icon="mdi-magnify" @click="toggleSearchMenu" />
-        <v-switch 
-          hide-details 
-          inset
-          :model-value="theme.global.name"
-          false-icon="mdi-weather-night" 
-          true-icon="mdi-weather-sunny"
-          @change="toggleTheme"
+        <v-btn 
+          :icon="theme.global.name.value === 'dark' ? 'mdi-weather-night' : 'mdi-weather-sunny'" 
+          @click="toggleTheme"
         />
     </template>
     <template #extension v-if="searchMenuIsShowing">
